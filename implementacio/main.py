@@ -22,7 +22,7 @@ if __name__ == '__main__':
         number of distractors of 5-bit
 
     example:
-    ./main -I 10 -R 10 -C 10 -b 100 -t 20
+    ./main.py -I 10 -R 10 -C 10 -b 100 -t 20
     """
 
     parser = argparse.ArgumentParser(prog = 'main.py')
