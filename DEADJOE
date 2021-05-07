@@ -1,0 +1,92 @@
+
+*** These modified files were found in JOE when it aborted on Thu May  6 19:32:52 2021
+*** JOE was aborted by UNIX signal 1
+
+*** File '/home/ferran/ferran/tfg/RC-ECA-110/.git/rebase-merge/git-rebase-todo'
+pick 727bebf part del codi mnist
+pick c0b8d94 actualitzacio 5 bit + dades 5 bit + mnist codi
+
+# Rebase 7509a22..c0b8d94 en 7509a22 (2 comandos)
+#
+# Comandos:
+# p, pick <commit> = usar commit
+# r, reword <commit> = usar commit, pero editar el mensaje de commit
+# e, edit <commit> = usar commit, pero parar para un amend
+# s, squash <commit> = usar commit, pero fusionarlo en el commit previo
+# f, fixup <commit> = como "squash", pero descarta el mensaje del log de este commit
+# x, exec <commit> = ejecuta comando ( el resto de la línea) usando un shell
+# b, break = parar aquí (continuar rebase luego con 'git rebase --continue')
+# d, drop <commit> = eliminar commit
+# l, label <label> = poner label al HEAD actual con un nombre
+# t, reset <label> = reiniciar HEAD a el label
+# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+# .       crea un commit de fusión usando el mensaje original de
+# .       fusión (o la línea de oneline, si no se especifica un mensaje
+# .       de commit). Use -c <commit> para reescribir el mensaje del commit.
+#
+# Estas líneas pueden ser reordenadas; son ejecutadas desde arriba hacia abajo.
+#
+# Si eliminas una línea aquí EL COMMIT SE PERDERÁ.
+#
+# Como sea, si quieres borrar todo, el rebase será abortado.
+#
+# Tenga en cuenta que los commits vacíos están comentados
+
+*** File '(Unnamed)'
+xarxes
+/home/ferran/ferran/universitat/computacio/logica_informativa/Logica-informatica/.git/MERGE_MSG
+/home/ferran/ferran/universitat/computacio/compiladors/compiladors-lab/.git/MERGE_MSG
+/home/ferran/ferran/tfg/RC-ECA-110/.git/COMMIT_EDITMSG
+/home/ferran/ferran/tfg/RC-ECA-110/.git/rebase-merge/git-rebase-todo
+
+*** File '* Startup Log *'
+Processing '/etc/joe/editorrc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc
+
+*** These modified files were found in JOE when it aborted on Thu May  6 19:41:27 2021
+*** JOE was aborted by UNIX signal 1
+
+*** File '/home/ferran/ferran/tfg/RC-ECA-110/.git/rebase-merge/git-rebase-todo'
+pick 727bebf part del codi mnist
+pick c0b8d94 actualitzacio 5 bit + dades 5 bit + mnist codi
+#
+# Comandos:
+# p, pick <commit> = usar commit
+# r, reword <commit> = usar commit, pero editar el mensaje de commit
+# e, edit <commit> = usar commit, pero parar para un amend
+# s, squash <commit> = usar commit, pero fusionarlo en el commit previo
+# f, fixup <commit> = como "squash", pero descarta el mensaje del log de este commit
+# x, exec <commit> = ejecuta comando ( el resto de la línea) usando un shell
+# b, break = parar aquí (continuar rebase luego con 'git rebase --continue')
+# d, drop <commit> = eliminar commit
+# l, label <label> = poner label al HEAD actual con un nombre
+# t, reset <label> = reiniciar HEAD a el label
+# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+# .       crea un commit de fusión usando el mensaje original de
+# .       fusión (o la línea de oneline, si no se especifica un mensaje
+# .       de commit). Use -c <commit> para reescribir el mensaje del commit.
+#
+# Estas líneas pueden ser reordenadas; son ejecutadas desde arriba hacia abajo.
+#
+# Si eliminas una línea aquí EL COMMIT SE PERDERÁ.
+#
+# Estás editando el archivo TODO de un rebase interactivo.
+# Para continuar el rebase después de editar, ejecuta:
+#     git rebase --continue
+#
+# Tenga en cuenta que los commits vacíos están comentados
+
+*** File '(Unnamed)'
+xarxes
+/home/ferran/ferran/universitat/computacio/logica_informativa/Logica-informatica/.git/MERGE_MSG
+/home/ferran/ferran/universitat/computacio/compiladors/compiladors-lab/.git/MERGE_MSG
+/home/ferran/ferran/tfg/RC-ECA-110/.git/COMMIT_EDITMSG
+/home/ferran/ferran/tfg/RC-ECA-110/.git/rebase-merge/git-rebase-todo
+
+*** File '* Startup Log *'
+Processing '/etc/joe/editorrc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc

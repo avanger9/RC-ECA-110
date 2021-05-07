@@ -4,7 +4,6 @@ import numpy as np
 
 from sklearn import linear_model
 
-from mnistproblem.mnistGenerator import generateMnistInput
 from fivebitproblem.fiveBitProblem import fivebit
 from encoder.encoder import Encoder
 from eca110 import elementaryCellularAutomata as eca
@@ -117,14 +116,10 @@ class ProblemClassification():
         # print(x)
         return x
 
-def start(I,R,C,bucle, distractor):
-
-
+def start(I, R, C,bucle, distractor):
 
     fbp = fivebit(distractor)
     input, output = fbp.generateProblem()
-
-
 
     iterations = I     # -I
     random_map = R     # -R
@@ -132,22 +127,30 @@ def start(I,R,C,bucle, distractor):
 
     """ No tenen utilitat per ara, però en algun codi els he vist i estan per si de cas"""
     diffuse, pad = 0, 0
-
-
-    r, pred, fail = 0, 0, 0
+    r = 0
+    pred = np.zeros(32, dtype=int)
+    fail = np.zeros(32, dtype=int)
+    f = open('fivebitproblem/dades_fivebit/fivebit_I%d_R%d_C%d_bucle%d_distractor%d'
+                        % (I, R, C, bucle, distractor), 'w+')
     while r < bucle:
+
         print('bucle:', r)
         r += 1
-        pc = ProblemClassification(iterations, random_map, size_of_v, input[0], output[0])
-        x = pc.generatingProblem()
+        for i in range(32):
+            pc = ProblemClassification(iterations, random_map, size_of_v,
+                                            input[i], output[i])
+            predictor = pc.generatingProblem()
 
-        succ = True
-        for a,b in zip(x,output[0]):
-            # print('array a:', a, 'array b:', b)
-            if not np.array_equal(a, b):
-                fail += 1
-                succ = False
-                break
-        if succ:
-            pred += 1
-    print('nombre dencerts:', pred, 'nombre de fallos:', fail)
+            success = True
+            for a,b in zip(predictor,output[i]):
+                # print('array a:', a, 'array b:', b)
+                if not np.array_equal(a, b):
+                    fail[i] += 1
+                    success = False
+                    break
+            if success:
+                pred[i] += 1
+    for i in range(32):
+        print('nombre dencerts:', pred[i], "nombre d'errors:", fail[i], "per l'input:", i+1)
+        f.write("nombre encerts: %d, nombre d'errors: %d per l'input: %d\n" % (pred[i], fail[i], i+1))
+    f.close()
