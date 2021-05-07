@@ -68,8 +68,54 @@ class elementaryCellularAutomata():
             plt.close()
 
 
+class elementaryCellularAutomataMnist():
+    """
+    Class eca per testejar diferentes funcionalitats, no
+    s'utilitza per les funcions principals
+    """
 
+    def __init__(self, iterations, start_pattern):
+        self.r = self._get_rule(110)
+        self.I = iterations
+        self.input = start_pattern
 
+    def _get_rule(self,idx):
+        """Return the rule with the name and the result of each combination of 3 bits"""
+        input_patterns = [
+            (1,1,1),
+            (1,1,0),
+            (1,0,1),
+            (1,0,0),
+            (0,1,1),
+            (0,1,0),
+            (0,0,1),
+            (0,0,0)
+        ]
+        outputs = list(map(int,format(idx, "#010b")[2:]))
+        mapping = dict(zip(input_patterns, outputs))
+        mapping["name"] = "Rule %d" % (idx)
+        return mapping
+
+    def generate_automata(self):
+        board = np.array(self.input)
+        rows = []
+        for _ in range(self.I):
+            board = self.iterate(board)
+            rows.append(board)
+
+        rows = np.array(rows)
+        return rows
+
+    def iterate(self, board):
+        """Return the new row of the cellular automata after applying the rule"""
+        new_board = np.zeros_like(board)
+        for i in range(1, board.shape[0] - 1):
+            """
+            Per cada iteracio agafa 3 bits i mira a la regla quin valor li correspon
+            Per la posició 0 i la posició final no es miren perquè no pots mirar el primer i últim bit
+            """
+            new_board[i] = self.r[tuple(board[i-1:i+2])]
+        return new_board
 
 class elementaryCellularAutomataTest():
     """
