@@ -48,9 +48,11 @@ class fivebit():
 
             self.inputs.append(input)
             self.outputs.append(output)
-        return np.array(self.inputs, dtype='int8'), np.array(self.outputs, dtype='int8')
+        return np.array(self.inputs, dtype='int'), np.array(self.outputs, dtype='int')
 
 if __name__ == "__main__":
+
+    "Per testejar el 5 bit"
     fbp = fivebit(10)
     inp, out = fbp.generateProblem()
     # print(inp, out)

@@ -33,7 +33,7 @@ class Encoder():
 
         """
         Tant el yilmaz com altrs pdf's indiquen que a partir del 2n input
-        s'utiitza la informació de l'últim autòmata cel·lular i despres de
+        s'utilitza la informació de l'ultim automat cel·lular i despres de
         codificar-lo i mapejar-lo, bit a bit, es decideix el valor a partir
         de la configuració següent
             · 1 si la suma dels 2 bits és 2

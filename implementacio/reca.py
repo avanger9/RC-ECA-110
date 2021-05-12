@@ -61,27 +61,35 @@ class ProblemClassification():
         """
         Per cada input el codifiquem i ja l'enviem al reservori per a que l'autòmata
         iteri i tinguem l'A_n. Com per mapejar l'input en cal la informació de
-        l'últim autòmata ho  fem tot en un mateix gran bucle
+        l'últim autòmata ho fem tot en un mateix gran bucle
         """
 
         first_inp = True
-        eca_i = []
+        eca_i = None
         for i in range(size):
-            if first_inp:
-                enc = Encoder(self.R, self.C, self.input[i]).encode_input(first_inp, eca_i)
-                self.encoder.append(enc)
-                aux_reservoir = eca(self.I, enc).generate_automata()
-                for k in range(self.I):
-                    self.reservoir.append(aux_reservoir[k])
-                eca_i = self.reservoir[-1]
-                first_inp = False
-            else:
-                enc = Encoder(self.R, self.C, self.input[i]).encode_input(first_inp, eca_i)
-                self.encoder.append(enc)
-                aux_reservoir = eca(self.I, enc).generate_automata()
-                for k in range(self.I):
-                    self.reservoir.append(aux_reservoir[k])
-                eca_i = self.reservoir[-1]
+            """
+            args:
+            -----
+            input_encoded: array auxiliar amb l'input codificat pels parametres R, C i l'automat anterior
+            encoder: array per emmagatzemar cada encoder
+            aux_reservoi: array auxiliar amb totes les iteracions I de la regla 110
+            reservoir: array er emmagatzemar cada iteració de l'automat
+            eca_i: array amb l'últim autòmat
+            """
+            input_encoded = Encoder(self.R, self.C, self.input[i]).encode_input(first_inp, eca_i)
+            self.encoder.append(input_encoded)
+            aux_reservoir = eca(self.I, input_encoded).generate_automata()
+            for k in range(self.I):
+                self.reservoir.append(aux_reservoir[k])
+            eca_i = self.reservoir[-1]
+            first_inp = False
+            # else:
+            #     enc = Encoder(self.R, self.C, self.input[i]).encode_input(first_inp, eca_i)
+            #     self.encoder.append(enc)
+            #     aux_reservoir = eca(self.I, enc).generate_automata()
+            #     for k in range(self.I):
+            #         self.reservoir.append(aux_reservoir[k])
+            #     eca_i = self.reservoir[-1]
         reservoir_size = len(self.encoder)
 
         """
@@ -127,6 +135,7 @@ def start(I, R, C,bucle, distractor):
 
     """ No tenen utilitat per ara, però en algun codi els he vist i estan per si de cas"""
     diffuse, pad = 0, 0
+
     r = 0
     pred = np.zeros(32, dtype=int)
     fail = np.zeros(32, dtype=int)
@@ -143,7 +152,6 @@ def start(I, R, C,bucle, distractor):
 
             success = True
             for a,b in zip(predictor,output[i]):
-                # print('array a:', a, 'array b:', b)
                 if not np.array_equal(a, b):
                     fail[i] += 1
                     success = False
