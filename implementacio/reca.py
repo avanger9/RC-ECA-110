@@ -7,6 +7,7 @@ from sklearn import linear_model
 from fivebitproblem.fiveBitProblem import fivebit
 from encoder.encoder import Encoder
 from eca110 import elementaryCellularAutomata as eca
+from visualitzador.visualitzador import visualizer
 
 
 class ProblemClassification():
@@ -105,7 +106,7 @@ class ProblemClassification():
                 aux.append(self.reservoir[i][j])
             a_i.append(aux)
 
-        # print(len(aux_i))
+        print(len(aux_i))
 
         classifier = linear_model.LinearRegression()
         classifier.fit(a_i, self.output)
@@ -122,7 +123,7 @@ class ProblemClassification():
         x = np.array(x, dtype=int)
 
         # print(x)
-        return x
+        return x, self.reservoir
 
 def start(I, R, C,bucle, distractor):
 
@@ -148,7 +149,7 @@ def start(I, R, C,bucle, distractor):
         for i in range(32):
             pc = ProblemClassification(iterations, random_map, size_of_v,
                                             input[i], output[i])
-            predictor = pc.generatingProblem()
+            predictor, automata = pc.generatingProblem()
 
             success = True
             for a,b in zip(predictor,output[i]):
@@ -162,3 +163,12 @@ def start(I, R, C,bucle, distractor):
         print('nombre dencerts:', pred[i], "nombre d'errors:", fail[i], "per l'input:", i+1)
         f.write("nombre encerts: %d, nombre d'errors: %d per l'input: %d\n" % (pred[i], fail[i], i+1))
     f.close()
+
+
+    # visualitzar l'automat
+
+    # for i in range(32):
+    #     pc = ProblemClassification(iterations, random_map, size_of_v,
+    #                                          input[i], output[i])
+    #     x, automata = pc.generatingProblem()
+    #     visualizer(automata, i, I, R, C)
