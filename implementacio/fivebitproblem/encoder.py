@@ -1,9 +1,7 @@
 #!../../python3.9/bin/python
 
-import sys
 import numpy as np
 import random
-import matplotlib.pyplot as plt
 
 class Encoder():
     def __init__(self, R, C, input):

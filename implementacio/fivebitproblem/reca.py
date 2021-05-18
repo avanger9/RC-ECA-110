@@ -1,13 +1,13 @@
-#!../python3.9/bin/python
+#!../../python3.9/bin/python
 
 import numpy as np
 
 from sklearn import linear_model
 
-from fivebitproblem.fiveBitProblem import fivebit
-from encoder.encoder import Encoder
+from generadorFiveBitProblem import fivebit
+from encoder import Encoder
 from eca110 import elementaryCellularAutomata as eca
-from visualitzador.visualitzador import visualizer
+# from visualitzador.visualitzador import visualizer
 
 
 class ProblemClassification():
@@ -84,14 +84,7 @@ class ProblemClassification():
                 self.reservoir.append(aux_reservoir[k])
             eca_i = self.reservoir[-1]
             first_inp = False
-            # else:
-            #     enc = Encoder(self.R, self.C, self.input[i]).encode_input(first_inp, eca_i)
-            #     self.encoder.append(enc)
-            #     aux_reservoir = eca(self.I, enc).generate_automata()
-            #     for k in range(self.I):
-            #         self.reservoir.append(aux_reservoir[k])
-            #     eca_i = self.reservoir[-1]
-        reservoir_size = len(self.encoder)
+        reservoir_size = len(self.input)
 
         """
         Per a que el classificador funcioni ha d'haver-hi el mateix nº de
@@ -106,7 +99,7 @@ class ProblemClassification():
                 aux.append(self.reservoir[i][j])
             a_i.append(aux)
 
-        print(len(aux_i))
+        # print(len(aux_i))
 
         classifier = linear_model.LinearRegression()
         classifier.fit(a_i, self.output)
@@ -125,6 +118,15 @@ class ProblemClassification():
         # print(x)
         return x, self.reservoir
 
+
+def visualizer_5bit(automat, i, I, R, C):
+
+    plt.figure
+    plt.imshow(automat, cmap='Greys', interpolation='nearest')
+    plt.title('Automata cellular elemental del 5 bit')
+    # plt.show()
+    plt.savefig('automats_fivebit/automata%d_I%d_R%d_C%d.png' % (i, I, R, C))
+
 def start(I, R, C,bucle, distractor):
 
     fbp = fivebit(distractor)
@@ -140,7 +142,7 @@ def start(I, R, C,bucle, distractor):
     r = 0
     pred = np.zeros(32, dtype=int)
     fail = np.zeros(32, dtype=int)
-    f = open('fivebitproblem/dades_fivebit/fivebit_I%d_R%d_C%d_bucle%d_distractor%d'
+    f = open('dades_fivebit/fivebit_I%d_R%d_C%d_bucle%d_distractor%d'
                         % (I, R, C, bucle, distractor), 'w+')
     while r < bucle:
 
@@ -171,4 +173,4 @@ def start(I, R, C,bucle, distractor):
     #     pc = ProblemClassification(iterations, random_map, size_of_v,
     #                                          input[i], output[i])
     #     x, automata = pc.generatingProblem()
-    #     visualizer(automata, i, I, R, C)
+    #     visualizer_5bit(automata, i, I, R, C)

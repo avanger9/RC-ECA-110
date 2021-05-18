@@ -1,4 +1,4 @@
-#!../python3.9/bin/python
+#!../../python3.9/bin/python
 
 import sys
 import numpy as np

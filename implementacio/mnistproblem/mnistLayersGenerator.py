@@ -43,5 +43,5 @@ if __name__ == '__main__':
     print('Prova per passar un número decimal a binari:', bit)
     print(bit[1])
 
-    # u = generateLayers(ti)
-    # np.save('train_images_layers_array.npy', u)
+    u = generateLayers(tti)
+    np.save('test_images_layers_array.npy', u)
