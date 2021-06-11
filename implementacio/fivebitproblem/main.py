@@ -59,7 +59,7 @@ if __name__ == '__main__':
     r = 0
     pred = np.zeros(32, dtype=int)
     fail = np.zeros(32, dtype=int)
-    f = open('dades_fivebit/fivebit_I%d_R%d_C%d_bucle%d_distractor%d'
+    f = open('dades_fivebit_update/fivebit_I%d_R%d_C%d_bucle%d_distractor%d'
                         % (I, R, C, bucle, distractor), 'w+')
     while r < bucle:
 
@@ -67,7 +67,10 @@ if __name__ == '__main__':
         r += 1
         for i in range(32):
             pc = ProblemClassification(I, R, C, input[i], output[i])
-            predictor, automata = pc.generatingProblem()
+            predictor, automat = pc.generatingProblem()
+            """ Predictor es la prediccio generada pel classificador
+                i automat és una matiu amb tots els automats generats
+                per poder veure'l amb el matplotlib"""
 
             # visualizer_5bit(automata, i, I, R, C)
 
@@ -82,6 +85,17 @@ if __name__ == '__main__':
     for i in range(32):
         print('nombre dencerts:', pred[i], "nombre d'errors:", fail[i], "per l'input:", i+1)
         f.write("nombre encerts: %d, nombre d'errors: %d per l'input: %d\n" % (pred[i], fail[i], i+1))
+
+    """ Calculem el % final """
+    res = np.ndarray(32, dtype=int)
+    for i in range(32):
+        p = pred[i]
+        res[i] = (p/bucle)*100
+    a = res.mean()
+    a = float(a)
+    print("El percentatge final d'encerts es: %f\n" % a)
+    print('I: %d R: %d distractor: %d\n' % (I, R, distractor))
+    f.write("\nEl percentatge final d'encerts es: %f\n" % a)
     f.close()
 
     print('--- %s seconds ---', '%.3f' % (time.time() - start_time))

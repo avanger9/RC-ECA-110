@@ -26,6 +26,7 @@ class ProblemClassification():
         self.input  = inp
         self.output = out
         self.encoder = []
+        self.cellular_automat = []
         self.reservoir = []
 
     def _get_rule(self,idx):
@@ -99,7 +100,6 @@ class ProblemClassification():
         array de mida C*size i el randomitzem R vegades
         """
 
-        random_input = []
         size = len(input)
         mapping_input = np.ndarray((self.R, size), dtype=int)
         for i in range(self.R):
@@ -145,7 +145,6 @@ class ProblemClassification():
 
         first_inp = True
         eca_i = None
-        cellular_automat = []
         for i in range(size):
             """
             args:
@@ -159,9 +158,8 @@ class ProblemClassification():
             """
             input_encoded     = self.encode_input(self.input[i], first_inp, eca_i)
             automat_reservoir = self.generate_automata(input_encoded)
-            cellular_automat.append(automat_reservoir)
+            self.cellular_automat.append(automat_reservoir)
             eca_i = automat_reservoir[-1]
-            # aux_reservoir = eca(self.I, input_encoded).generate_automata()
             self.reservoir.append(automat_reservoir.flatten())
             self.encoder.append(input_encoded)
             first_inp = False
@@ -177,4 +175,4 @@ class ProblemClassification():
         output_predicted = self.training_5bit()
 
         # print(x)
-        return output_predicted, cellular_automat
+        return output_predicted, self.cellular_automat

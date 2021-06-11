@@ -26,7 +26,7 @@ class mnist():
         self.nimages = nimages
         self.x = x
         self.y = y
-        self.bits = bits
+        self.byte = bits
 
     def _get_rule(self,idx):
         """ Retorna la regla del eca amb al valor corresponent al conjunt
@@ -99,7 +99,7 @@ class mnist():
             aux = []
             for j in range(self.y):
                 binary = ''
-                for bit in range(self.bits):
+                for bit in range(self.byte):
                     """ al posar-ho de nou en binari ho fem pensant en l'ordre
                         u7 u6 u5 u4 u3 u2 u1 u0"""
                     binary += str(aut[7-bit][i][j])
@@ -128,7 +128,6 @@ class mnist():
         return np.array(bitsMax)
 
 
-
     def start(self):
         """ Funció principal per dur a terme tots els passos per extreure les
             les dades d'entrada de cada imatge del mnist
@@ -136,8 +135,8 @@ class mnist():
         f = open('errors_en_imatges.txt', 'w+')
         for k in range(self.nimages):
             try:
-                rowsb = np.ndarray((self.bits, self.x, self.y), dtype=int)
-                for bit in range(self.bits):
+                rowsb = np.ndarray((self.byte, self.x, self.y), dtype=int)
+                for bit in range(self.byte):
                     """ recordem en el bit = 0 está el bit de menys pes i el
                         bit = 7 está el bit de més pes """
                     rowsb[bit] = self.createReservoir(self.images[k], bit)  # 8 matrius de 28x28
@@ -158,8 +157,8 @@ class mnist():
                 W       = np.ndarray((self.M, 14*14),     dtype=int)
 
                 for i in range(self.M):
-                    automat_aux = np.ndarray((self.bits, 28, 28), dtype=int)
-                    for bit in range(self.bits):
+                    automat_aux = np.ndarray((self.byte, 28, 28), dtype=int)
+                    for bit in range(self.byte):
                         """ evolucio de l'automat pels 8 bits, el 1r pas rep
                             la matriu original, els pròxims steps es rep l'autòmat """
                         if i:
@@ -183,7 +182,7 @@ class mnist():
             except:
                 f.write('Error en la imatge %d\r\n' % k)
         self.Ws = np.array(self.Ws)
-        np.save('train_ws_array/ws_%s_arrayfile' (self.nom), self.Ws)
+        np.save('train_ws_array_I13/ws_%s_arrayfile' % (self.nom), self.Ws)
         f.close()
         """
         Arribats a aquest punt, el processament de l'entrada d'una imatge k
@@ -204,8 +203,33 @@ def visualize_board(board, title):
     plt.show()
     plt.close()
 
-def test(u, tri):
-    pass
+
+
+
+def baseCase(images, nom):
+    Ws = []
+    for k in range(60000):
+        image = images[k]
+
+        start, step2, end = 0, 2, 28
+        # print(image)
+        bitsMax = []
+        for i in range(start, end, step2):
+            auxM = []
+            for j in range(start, end, step2):
+                aux = image[i:i+step2, j:j+step2]
+                aux = np.array(aux)
+                # print('h', aux)
+                max_4bits = aux.max()
+                auxM.append(max_4bits)
+            bitsMax.append(auxM)
+
+        # visualize_board(bitsMax, '14x14')
+        imageMax = np.array(bitsMax)
+
+        Ws.append(imageMax.flatten())
+    Ws = np.array(Ws)
+    np.save('train_ws_array_I0/ws_%s_arrayfile' % (nom), Ws)
 
 if __name__ == '__main__':
 
@@ -220,8 +244,8 @@ if __name__ == '__main__':
     # lab = np.load('../../mnist/array/train_labels_array.npy')
     # for i in range(10):
     #     print(lab[i])
-    test =     np.load('images_layers_generated/test_images_layers_array.npy')
-    training = np.load('images_layers_generated/train_images_layers_array.npy')
+
+
 
     """
     vector u generat amb les 8 capes
@@ -234,6 +258,13 @@ if __name__ == '__main__':
     cada columna iterant sobre un parametre M
     """
 
-    M = 10
-    mnist(training, 'train', M).start()
-    mnist(test, 'test', M).start()
+    M = 0
+    # training = np.load('images_layers_generated/train_images_layers_array.npy')
+    training = np.load('mnist_array/train_images_array.npy')
+    # mnist(training, 'train', M).start()
+    baseCase(training, 'train')
+
+    # test = np.load('mnist_array/test_images_array.npy')
+    # test = np.load('images_layers_generated/test_images_layers_array.npy')
+    # mnist(test, 'test', M).start()
+    # baseCase(test, 'test')
