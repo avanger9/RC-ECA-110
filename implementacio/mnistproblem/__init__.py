@@ -2,4 +2,5 @@
 
 from . import mnistProblem
 from . import mnistLayersGenerator
-from . import test
+from . import excel
+from . import training
