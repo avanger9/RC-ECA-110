@@ -2,10 +2,7 @@
 
 import numpy as np
 import time
-from multiprocessing import Pool
-
-# import sys; sys.path.append('../')
-# from eca110 import elementaryCellularAutomataMnist as eca
+import argparse
 
 class mnist():
     def __init__(self, images, nom, M):
@@ -13,9 +10,6 @@ class mnist():
         self.M = M
         self.images = images
         self.nom = nom
-        # self.tri = tri
-        # self.labels = labels
-
 
         self._vars()
         self.rows = []
@@ -142,16 +136,7 @@ class mnist():
                     rowsb[bit] = self.createReservoir(self.images[k], bit)  # 8 matrius de 28x28
                 self.rows.append(rowsb)
                 print('Imatge' ,k, 'contruida correctament amb 8 matrius de 28x28', rowsb.shape)
-                """
-                En aquest punt ja tenim guardats per cada imatge els bits de mes a
-                menys pes en vectors
-                """
-                # try:
-                #     p = Pool(8)     # 8 procesadors
-                #     a = p.starmap(evolveReservoir, [(rowsb[bit], x) for bit in range(bits)])
-                # finally:
-                #     p.close()
-                #     p.join()
+
 
                 automat = np.ndarray((self.M, 8, 28, 28), dtype=int)
                 W       = np.ndarray((self.M, 14*14),     dtype=int)
@@ -208,26 +193,13 @@ def visualize_board(board, title):
 
 def baseCase(images, nom):
     Ws = []
-    for k in range(60000):
-        image = images[k]
 
-        start, step2, end = 0, 2, 28
-        # print(image)
-        bitsMax = []
-        for i in range(start, end, step2):
-            auxM = []
-            for j in range(start, end, step2):
-                aux = image[i:i+step2, j:j+step2]
-                aux = np.array(aux)
-                # print('h', aux)
-                max_4bits = aux.max()
-                auxM.append(max_4bits)
-            bitsMax.append(auxM)
+    totalIm = 60000 if nom == 'train' else 10000
 
-        # visualize_board(bitsMax, '14x14')
-        imageMax = np.array(bitsMax)
-
-        Ws.append(imageMax.flatten())
+    for k in range(totalIm):
+        image = np.array(images[k])
+        image1D = image.flatten()
+        Ws.append(image1D)
     Ws = np.array(Ws)
     np.save('train_ws_array_I0/ws_%s_arrayfile' % (nom), Ws)
 
@@ -235,36 +207,23 @@ if __name__ == '__main__':
 
     start_time = time.time()
 
-    # parser = argparse.ArgumentParser(prog = 'mnistProblem.py')
-    # parser.add_argument('-M', required=True, type=int)
-    # args = parser.parse_args()
-    # M = args.M
+    parser = argparse.ArgumentParser(prog = 'mnistProblem.py')
+    parser.add_argument('-I', required=True, type=int)
+    parser.add_argument('-F', type=str)
+    args = parser.parse_args()
+    M = args.I
 
-    # tri = np.load('../../mnist/array/train_images_array.npy')
-    # lab = np.load('../../mnist/array/train_labels_array.npy')
-    # for i in range(10):
-    #     print(lab[i])
+    file = None if M == 0 else args.F
 
-
-
-    """
-    vector u generat amb les 8 capes
-    Per les proves inicials es treballarà amb un vector més petit
-    """
-    # visualize_board(tri, 'hola')
-
-    """
-    Per cada imatge treballarem amb els bits del mateix pes per cada fila i
-    cada columna iterant sobre un parametre M
-    """
-
-    M = 0
-    # training = np.load('images_layers_generated/train_images_layers_array.npy')
-    training = np.load('mnist_array/train_images_array.npy')
-    # mnist(training, 'train', M).start()
-    baseCase(training, 'train')
-
-    # test = np.load('mnist_array/test_images_array.npy')
-    # test = np.load('images_layers_generated/test_images_layers_array.npy')
-    # mnist(test, 'test', M).start()
-    # baseCase(test, 'test')
+    if file == 'training':
+        training = np.load('images_layers_generated/train_images_layers_array.npy')
+        mnist(training, 'train', M).start()
+    elif file == 'test':
+        test = np.load('images_layers_generated/test_images_layers_array.npy')
+        mnist(test, 'test', M).start()
+    else:
+        # cas base on I = 0
+        training = np.load('mnist_array/train_images_array.npy')
+        test = np.load('mnist_array/test_images_array.npy')
+        baseCase(training, 'train')
+        baseCase(test, 'test')
