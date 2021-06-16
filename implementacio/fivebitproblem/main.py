@@ -73,7 +73,6 @@ if __name__ == '__main__':
                 per poder veure'l amb el matplotlib"""
 
             # visualizer_5bit(automata, i, I, R, C)
-
             success = True
             for a,b in zip(predictor,output[i]):
                 if not np.array_equal(a, b):
