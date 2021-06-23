@@ -23,7 +23,7 @@ El main serveix per passar-li els hiperparàmetres del sistema. Els hiperparàme
 
 > python main.py -I 8 -R 4 -b 50 -t 50
 
-En aquest exemple es té 50 execucions amb un predictor de 5 on és maparà 4 vegades de manera aleatòria i l'autòmat s'executarà 8 vegades per cada input del sistema.
+En aquest exemple es té 50 execucions amb un predictor de 50 on és maparà 4 vegades de manera aleatòria i l'autòmat s'executarà 8 vegades per cada input del sistema.
 
 El **mnistproblem** conté els fitxers python per dur a terme el benchmark del MNIST. poder executar el sistema calen tenir instal·lat els mòduls **Numpy**, **Keras** i **Tensorflow**.
 > mnistDataset.py
